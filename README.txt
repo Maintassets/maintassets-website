@@ -1,0 +1,1 @@
+MAINTASSETS V1 final refinement: three approach posters have a hover/read mode; supporting copy updated in Approach, Warning Signs, and Experience; Questions keeps Poster 7 unchanged and adds a subtle strategy/assets/data/people orbit treatment in the blank surrounding area; Poster 9 remains; footer is centered copyright + Terms & Privacy.
