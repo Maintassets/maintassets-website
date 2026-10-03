@@ -166,10 +166,35 @@
   .lead-note { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
 
   /* results */
-  .score-row { display: flex; align-items: baseline; gap: 10px; }
-  .score-big { font-family: var(--font-display); font-weight: 700; font-size: 44px; color: var(--navy-deep); }
-  :root[data-theme="dark"] .score-big { color: #fff; }
-  .score-of { font-family: var(--font-mono); font-size: 15px; color: var(--ink-soft); }
+  .score-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  background: #FFFFFF;
+  border: 1px solid #DCE5EE;
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 6px 20px rgba(17, 42, 71, 0.08);
+}
+
+.score-big {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1;
+  color: #1769D2 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.score-of {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: #112A47 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
   .band-pill {
     display: inline-flex; align-items: center; font-family: var(--font-mono); font-size: 11.5px;
     letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber-deep);
