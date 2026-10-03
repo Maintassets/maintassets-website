@@ -1,254 +1,434 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MAINTASSETS — Client-Side Independent Consultant</title>
+<meta name="description" content="MAINTASSETS — client-side independent consultant for asset management, maintenance transformation, EAM/APM technology decisions, implementation and adoption.">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap');
-:root{--n:#091f3a;--b:#1769d2;--g:#efb45f;--p:#f5f8fb;--m:#64748b;--l:#dce5ee;--t:#112a47}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--p);color:var(--t);font-family:Inter,Arial,sans-serif}a{text-decoration:none;color:inherit}img{display:block;max-width:100%}.container{width:min(1180px,92vw);margin:auto}.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--b),#7059dc,var(--g));z-index:999;width:0}section{scroll-margin-top:86px}.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--b)}h1,h2,h3{font-family:'Playfair Display',Georgia,serif}h1{font-size:clamp(3.5rem,7vw,6.8rem);line-height:.9;margin:18px 0}h2{font-size:clamp(2.5rem,5vw,5rem);line-height:.96;margin:12px 0}p{line-height:1.7}.btn{display:inline-flex;padding:14px 20px;border-radius:999px;font-weight:800;border:1px solid var(--l);transition:.25s}.btn:hover{transform:translateY(-2px)}
-.nav{position:fixed;inset:0 0 auto;z-index:100;background:#fffffff0;backdrop-filter:blur(18px);border-bottom:1px solid #091f3a14}.nav-inner{height:86px;display:flex;align-items:center;justify-content:space-between}.nav-logo{width:285px;height:72px;object-fit:contain;object-position:left}.navlinks{display:flex;gap:25px;align-items:center;font-size:.8rem;font-weight:800}.navlinks .cta{background:var(--n);color:#fff;padding:12px 17px;border-radius:999px}.menu{display:none;border:0;background:none;font-size:25px}
-.hero{min-height:100vh;padding:130px 0 70px;display:grid;place-items:center;color:#fff;position:relative;overflow:hidden;background:radial-gradient(circle at 78% 20%,#1d9cf03d,transparent 28%),radial-gradient(circle at 15% 80%,#7059dc33,transparent 28%),linear-gradient(120deg,#061a32,#0e3158)}.hero:before{content:'';position:absolute;inset:0;opacity:.16;background:linear-gradient(90deg,transparent 49.7%,#ffffff33 50%,transparent 50.3%),linear-gradient(0deg,transparent 49.7%,#ffffff24 50%,transparent 50.3%);background-size:140px 140px}.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1fr .85fr;gap:60px;align-items:center}.hero-copy{max-width:700px}.hero-copy .eyebrow{color:#72c4ff}.hero-copy p{max-width:630px;color:#ffffffb8}.accent{color:#72c4ff;font-style:italic}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.hero-actions .primary{background:#fff;color:var(--n)}.hero-actions .light{background:#ffffff14;color:#fff;border-color:#ffffff33}.logo-panel{background:#fff;border-radius:24px;padding:28px;box-shadow:0 35px 90px #00000047}.hero-bottom{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:.62rem;letter-spacing:.2em;color:#ffffff80;white-space:nowrap}
-.about{background:#fff;padding:100px 0}.about-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:center}.about-copy p{color:var(--m)}.mini-list{display:grid;gap:10px;margin:24px 0}.mini-list div{padding:13px 15px;border-left:3px solid var(--b);background:#f7f9fc;font-size:.87rem;font-weight:700}.about-poster{border-radius:25px;overflow:hidden;box-shadow:0 24px 70px #091f3a29}
-.stack{padding:95px 0;background:linear-gradient(#1769d209 1px,transparent 1px),linear-gradient(90deg,#1769d209 1px,transparent 1px),#f6f8fb;background-size:48px 48px}.stack-head{text-align:center;max-width:720px;margin:0 auto 45px}.stack-head p,.ind-head p,.exp-head p{color:var(--m)}.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.poster-card{background:#fff;border:1px solid var(--l);border-radius:22px;overflow:visible;box-shadow:0 12px 40px #091f3a12;transition:.38s;position:relative;z-index:1}.poster-card:after{content:'HOVER TO READ';position:absolute;right:16px;top:16px;z-index:5;padding:7px 10px;border-radius:999px;background:#091f3ae8;color:#fff;font-size:.54rem;font-weight:800;letter-spacing:.13em;opacity:0;transform:translateY(-6px);transition:.3s}.poster-card:hover{transform:translateY(-10px) scale(1.025);box-shadow:0 32px 80px #091f3a33;border-color:#1769d259;z-index:10}.poster-card:hover:after{opacity:1;transform:none}.poster-zoom{height:390px;overflow:hidden;border-radius:22px 22px 0 0;background:#f8fafc;transition:.42s}.poster-card:hover .poster-zoom{height:570px}.poster-zoom img{width:100%;height:100%;object-fit:contain;transition:.55s}.poster-card:hover .poster-zoom img{transform:scale(1.08)}.card-foot{padding:20px}.card-foot span{font-size:.64rem;color:var(--b);font-weight:800;letter-spacing:.14em;text-transform:uppercase}.card-foot h3{font-size:1.5rem;margin:7px 0}
-.warning{background:var(--n);padding:95px 0;color:#fff}.warning-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:50px;align-items:center}.warning-copy p{color:#ffffffb3}.warning-poster,.industry-poster,.exp-poster{background:#fff;border-radius:24px;padding:18px;box-shadow:0 25px 70px #091f3a29}.warning-poster img,.industry-poster img,.exp-poster img{width:100%;border-radius:13px}.industries{background:#fff;padding:95px 0}.ind-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:38px}.ind-head p{max-width:500px}.industry-poster{background:var(--n)}
-.focus{background:linear-gradient(#1769d209 1px,transparent 1px),linear-gradient(90deg,#1769d209 1px,transparent 1px),#f0f3f8;background-size:48px 48px;padding:100px 0 110px;overflow:hidden}.focus-head{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:45px;margin-bottom:34px}.focus-creative{position:relative;min-height:280px;display:grid;grid-template-columns:1fr 1fr;gap:15px;align-items:center}.focus-orbit{position:absolute;inset:20px;border:1px dashed #1769d240;border-radius:50%;transform:rotate(-12deg)}.focus-orbit:before,.focus-orbit:after{content:'';position:absolute;border:1px solid #6756d92b;border-radius:50%}.focus-orbit:before{inset:25px}.focus-orbit:after{inset:55px;border-color:#1d9cf033}.focus-chip{position:relative;z-index:2;padding:12px 14px;border-radius:14px;background:#ffffffe8;border:1px solid #d7e2ed;box-shadow:0 10px 25px #091f3a0f;font-size:.63rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.focus-chip:nth-of-type(2),.focus-chip:nth-of-type(4){justify-self:end}.focus-chip:nth-of-type(3){justify-self:start}.focus-centre{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);width:116px;height:116px;border-radius:50%;background:var(--n);color:#fff;display:grid;place-items:center;text-align:center;font-size:.62rem;font-weight:800;letter-spacing:.12em;line-height:1.5;box-shadow:0 18px 40px #091f3a2e}.poster7-shell{position:relative;background:#fff;border:1px solid #dfe6ee;border-radius:28px;padding:24px;box-shadow:0 24px 70px #091f3a29;overflow:hidden}.poster7-shell:before{content:'';position:absolute;inset:18px;border-radius:20px;border:1px solid #1769d21f}.poster7-shell:after{content:'';position:absolute;width:230px;height:230px;right:-85px;bottom:-95px;border:1px solid #efb45f47;border-radius:50%;box-shadow:0 0 0 24px #efb45f0b,0 0 0 60px #1769d209}.focus-tag{position:absolute;top:32px;right:32px;z-index:4;background:var(--n);color:#fff;padding:9px 13px;border-radius:999px;font-size:.62rem;font-weight:800;letter-spacing:.12em}.poster7{width:min(620px,100%);margin:auto;border-radius:12px;box-shadow:0 28px 65px #091f3a38;position:relative;z-index:2}
-.experience{background:#f5f7fa;padding:95px 0}.exp-head{text-align:center;max-width:720px;margin:0 auto 38px}.talk{position:relative;overflow:hidden;padding:105px 0;background:radial-gradient(circle at 78% 24%,#1d9cf021,transparent 23%),radial-gradient(circle at 14% 82%,#6756d914,transparent 24%),linear-gradient(#1769d20b 1px,transparent 1px),linear-gradient(90deg,#1769d20b 1px,transparent 1px),#f7fafc;background-size:auto,auto,52px 52px,52px 52px}.talk-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}.talk-copy p{color:var(--m);max-width:600px}.contact-strip{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.contact-strip .btn{background:var(--n);color:#fff}.contact-strip .alt{background:#fff;color:var(--n);border-color:#ccd7e4}.talk-poster{background:var(--n);padding:14px;border-radius:28px;box-shadow:0 28px 75px #091f3a2e}.talk-poster img{width:100%;border-radius:16px}.operation-addresses{
-    padding:24px 0 20px;
-    color:#64748b;
-    font-size:.72rem;
-    text-align:center;
-    border-top:1px solid #e8edf2;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap');
+:root{--n:#091f3a;--n2:#0e3158;--b:#1769d2;--g:#efb45f;--p:#f5f8fb;--m:#5b6b80;--l:#dce5ee;--t:#112a47;--r:20px;--shadow:0 18px 50px #091f3a1f}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--p);color:var(--t);font-family:Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}img{display:block;max-width:100%}
+.container{width:min(1180px,90vw);margin:auto}
+.progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--b),var(--g));z-index:999;width:0}
+section{scroll-margin-top:84px}
+.eyebrow{font-size:.7rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--b)}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:600;letter-spacing:-.01em}
+h1{font-size:clamp(2.8rem,5.6vw,5.2rem);line-height:1;margin:18px 0}
+h2{font-size:clamp(2.1rem,3.8vw,3.4rem);line-height:1.05;margin:12px 0 18px}
+p{line-height:1.75;font-size:1.02rem}
+.lead{color:var(--m);max-width:560px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;font-weight:700;font-size:.92rem;border:1px solid var(--l);transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px #091f3a22}
+.btn.dark{background:var(--n);color:#fff;border-color:var(--n)}
+.btn.blue{background:var(--b);color:#fff;border-color:var(--b)}
+.btn.white{background:#fff;color:var(--n);border-color:#fff}
 
-.operation-title{
-    font-size:.62rem;
-    font-weight:700;
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    color:#94a3b8;
-    margin-bottom:12px;
-}
+/* nav */
+.nav{position:fixed;inset:0 0 auto;z-index:100;background:#ffffffeb;backdrop-filter:blur(16px);border-bottom:1px solid #091f3a12}
+.nav-inner{height:78px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{width:240px;height:60px;object-fit:contain;object-position:left}
+.navlinks{display:flex;gap:28px;align-items:center;font-size:.86rem;font-weight:600;color:#33475f}
+.navlinks a:not(.cta):hover{color:var(--b)}
+.navlinks .cta{background:var(--n);color:#fff;padding:11px 18px;border-radius:999px}
+.menu{display:none;border:1px solid var(--l);background:#fff;border-radius:10px;width:44px;height:44px;font-size:20px;cursor:pointer;color:var(--n)}
 
-.operation-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:35px;
-    max-width:850px;
-    margin:auto;
-    line-height:1.6;
-}
+/* hero */
+.hero{min-height:92vh;padding:130px 0 80px;display:grid;place-items:center;color:#fff;position:relative;overflow:hidden;background:radial-gradient(circle at 80% 20%,#1d9cf030,transparent 30%),radial-gradient(circle at 12% 85%,#efb45f1f,transparent 30%),linear-gradient(120deg,#061a32,var(--n2))}
+.hero:before{content:'';position:absolute;inset:0;opacity:.12;background:linear-gradient(90deg,transparent 49.7%,#ffffff33 50%,transparent 50.3%),linear-gradient(0deg,transparent 49.7%,#ffffff24 50%,transparent 50.3%);background-size:140px 140px}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:70px;align-items:center}
+.hero-copy .eyebrow{color:var(--g)}
+.hero-copy p{max-width:580px;color:#ffffffc4;font-size:1.1rem}
+.accent{color:var(--g);font-style:italic}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.hero-actions .light{background:#ffffff12;color:#fff;border-color:#ffffff40}
+.logo-panel{background:#fff;border-radius:24px;padding:36px;box-shadow:0 35px 90px #00000052}
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px}
+.hero-pills span{padding:7px 12px;border:1px solid #ffffff2e;border-radius:999px;font-size:.72rem;font-weight:600;letter-spacing:.08em;color:#ffffffb3}
 
-.operation-grid strong{
-    font-size:.7rem;
-    color:#475569;
-}
+/* generic split section */
+.band{padding:110px 0}
+.band.white{background:#fff}
+.band.grid-bg{background:linear-gradient(#1769d208 1px,transparent 1px),linear-gradient(90deg,#1769d208 1px,transparent 1px),#f4f7fb;background-size:48px 48px}
+.band.navy{background:var(--n);color:#fff}
+.band.navy .eyebrow{color:var(--g)}
+.band.navy .lead{color:#ffffffb8}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.split.flip .split-copy{order:2}
+.mini-list{display:grid;gap:10px;margin:26px 0 30px}
+.mini-list div{padding:13px 16px;border-left:3px solid var(--b);background:#f5f8fc;border-radius:0 10px 10px 0;font-size:.92rem;font-weight:600}
 
+/* posters (shared) */
+.poster{position:relative;display:block;width:100%;max-width:470px;margin:auto;padding:0;border:0;background:#fff;border-radius:var(--r);overflow:hidden;cursor:zoom-in;box-shadow:var(--shadow);transition:transform .3s,box-shadow .3s}
+.poster img{width:100%;height:auto}
+.poster:hover{transform:translateY(-4px);box-shadow:0 28px 70px #091f3a33}
+.poster .zoom-hint{position:absolute;right:14px;bottom:14px;display:flex;align-items:center;gap:7px;padding:9px 13px;border-radius:999px;background:#091f3ae6;color:#fff;font:700 .72rem Inter,Arial,sans-serif;letter-spacing:.06em;opacity:.92;transition:opacity .2s,transform .2s;pointer-events:none}
+.poster:hover .zoom-hint{opacity:1;transform:translateY(-2px)}
+.poster:focus-visible{outline:3px solid var(--g);outline-offset:4px}
+.band.navy .poster{box-shadow:0 25px 70px #00000055}
+
+/* approach cards */
+.section-head{text-align:center;max-width:720px;margin:0 auto 50px}
+.section-head .lead{margin:auto}
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.poster-card{background:#fff;border:1px solid var(--l);border-radius:var(--r);overflow:hidden;box-shadow:0 10px 30px #091f3a10;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
+.poster-card:hover{transform:translateY(-6px);box-shadow:0 26px 60px #091f3a26}
+.poster-card .poster{max-width:none;border-radius:0;box-shadow:none;transform:none}
+.card-foot{padding:20px 22px 22px;display:flex;justify-content:space-between;align-items:end;gap:12px;border-top:1px solid var(--l)}
+.card-foot span{font-size:.68rem;color:var(--b);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.card-foot h3{font-size:1.45rem;margin:6px 0 0}
+.read-btn{flex:none;border:1px solid var(--l);background:#fff;border-radius:999px;padding:8px 13px;font:700 .75rem Inter,Arial,sans-serif;color:var(--n);cursor:pointer}
+.read-btn:hover{background:var(--n);color:#fff}
+
+/* questions chips */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 30px}
+.chips span{padding:10px 15px;border-radius:12px;background:#fff;border:1px solid #d7e2ed;font-size:.74rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 6px 16px #091f3a0d}
+.chips span.core{background:var(--n);color:#fff;border-color:var(--n)}
+
+/* try it */
+.try-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:10px}
+.try-card{position:relative;display:flex;flex-direction:column;gap:14px;padding:34px 32px;border-radius:var(--r);background:linear-gradient(150deg,#12345e,#0b2442);border:1px solid #ffffff1f;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s}
+.try-card:hover{transform:translateY(-6px);box-shadow:0 28px 70px #00000059;border-color:#efb45f80}
+.try-card:after{content:'';position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:50%;border:1px solid #efb45f2e;box-shadow:0 0 0 30px #efb45f08}
+.try-icon{width:64px;height:64px;border-radius:16px;background:#ffffff10;border:1px solid #ffffff24;display:grid;place-items:center}
+.try-icon svg{width:44px;height:44px}
+.try-meta{font-size:.7rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--g)}
+.try-card h3{margin:0;font-size:2rem;color:#fff}
+.try-card p{margin:0;color:#ffffffb8;max-width:440px}
+.try-card .btn{align-self:flex-start;margin-top:8px}
+.try-card .btn.gold{background:var(--g);color:var(--n);border-color:var(--g)}
+
+/* footer */
+.footer{background:var(--n);color:#ffffffb3;padding:60px 0 26px;font-size:.9rem}
+.footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;padding-bottom:36px;border-bottom:1px solid #ffffff1f}
+.footer h4{margin:0 0 12px;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--g)}
+.footer strong{color:#fff;font-family:'Playfair Display',Georgia,serif;font-size:1.5rem;font-weight:600}
+.footer p{margin:8px 0 0;font-size:.9rem;line-height:1.7}
+.footer a:hover{color:#fff;text-decoration:underline}
+.footer-bottom{display:flex;justify-content:space-between;gap:16px;padding-top:22px;font-size:.8rem;flex-wrap:wrap}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:1000;background:#050f1d;display:none;flex-direction:column;color:#fff;touch-action:none}
+.lb.open{display:flex}
+.lb-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid #ffffff1a}
+.lb-title{font-weight:700;font-size:.95rem}.lb-title small{display:block;font-weight:600;font-size:.7rem;letter-spacing:.14em;color:var(--g);text-transform:uppercase}
+.lb-tools{display:flex;gap:6px;align-items:center}
+.lb-btn{height:40px;min-width:40px;padding:0 12px;border-radius:10px;border:1px solid #ffffff2e;background:#ffffff12;color:#fff;font:700 .85rem Inter,Arial,sans-serif;cursor:pointer;display:grid;place-items:center}
+.lb-btn:hover{background:#ffffff26}
+.lb-zoom{min-width:58px;text-align:center;font:600 .82rem Inter,Arial,sans-serif;color:#ffffffcc}
+.lb-stage{flex:1;position:relative;overflow:hidden;cursor:grab}
+.lb-stage.drag{cursor:grabbing}
+.lb-stage img{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none;user-select:none;-webkit-user-drag:none;box-shadow:0 20px 60px #0008;border-radius:6px}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:50%;border:1px solid #ffffff33;background:#091f3acc;color:#fff;font-size:22px;cursor:pointer;z-index:3}
+.lb-nav:hover{background:var(--b)}
+.lb-prev{left:16px}.lb-next{right:16px}
+.lb-help{text-align:center;font-size:.75rem;color:#ffffff8c;padding:8px 12px 12px}
+
+@media(max-width:950px){
+  .navlinks{display:none;position:absolute;top:78px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#fff;border-bottom:1px solid var(--l);box-shadow:0 20px 40px #091f3a1a;padding:8px 5vw 16px}
+  .navlinks.open{display:flex}
+  .navlinks a{padding:14px 4px;border-bottom:1px solid #eef2f6}
+  .navlinks .cta{margin-top:10px;text-align:center;border:0}
+  .menu{display:block}
+  .hero-grid,.split{grid-template-columns:1fr;gap:46px}
+  .split.flip .split-copy{order:0}
+  .logo-panel{width:min(480px,90vw);margin:auto}
+  .card-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .try-grid{grid-template-columns:1fr}
+}
 @media(max-width:600px){
-    .operation-grid{
-        grid-template-columns:1fr;
-        gap:12px;
-    }
-}.footer{background:#f5f7fa;color:#29415f;padding:16px 0 18px;font-size:.82rem;border-top:1px solid #e2e8f0}.footer-simple{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}.footer-simple a:hover{text-decoration:underline;color:var(--b)}
-@media(max-width:950px){.navlinks{display:none}.menu{display:block}.nav-logo{width:235px}.hero-grid,.about-grid,.warning-grid,.talk-grid{grid-template-columns:1fr}.logo-panel{width:min(550px,90vw);margin:auto}.card-grid{grid-template-columns:1fr 1fr}.focus-head{grid-template-columns:1fr}}@media(max-width:600px){.nav-inner{height:76px}.nav-logo{width:210px;height:64px}.hero{padding-top:110px}.hero-bottom{display:none}.card-grid{grid-template-columns:1fr}.poster-card:hover{transform:translateY(-5px)}.poster-card .poster-zoom,.poster-card:hover .poster-zoom{height:auto}.poster-zoom img,.poster-card:hover .poster-zoom img{transform:none}.focus{padding:75px 0}.focus-head{gap:20px}.poster7-shell{padding:13px}.focus-tag{top:22px;right:22px}.about,.stack,.warning,.industries,.experience,.talk{padding:75px 0}}
+  .nav-inner{height:70px}.navlinks{top:70px}.nav-logo{width:190px;height:54px}
+  .hero{padding:110px 0 60px;min-height:auto}
+  .band{padding:76px 0}
+  .card-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .lb-tools .lb-btn.hide-sm{display:none}
+  .lb-nav{width:42px;height:42px;font-size:18px}.lb-prev{left:8px}.lb-next{right:8px}
+}
 </style>
 </head>
 <body>
 <div class="progress" id="progress"></div>
+
 <header class="nav">
-    <div class="container nav-inner">
-        <a href="#home">
-            <img class="nav-logo" src="assets/maintassets-original-logo.png" alt="MAINTASSETS">
-        </a>
-        <nav class="navlinks">
-            <a href="#about">About</a>
-            <a href="#approach">Our Approach</a>
-            <a href="#industries">Industries</a>
-            <a href="#questions">Questions</a>
-            <a href="#experience">Experience</a>
-            <a href="#talk" class="cta">Talk to Us</a>
-        </nav>
-        <button class="menu" onclick="document.getElementById('talk').scrollIntoView({behavior:'smooth'})">☰</button>
-    </div>
+  <div class="container nav-inner">
+    <a href="#home"><img class="nav-logo" src="assets/maintassets-original-logo.png" alt="MAINTASSETS"></a>
+    <nav class="navlinks" id="navlinks">
+      <a href="#about">About</a>
+      <a href="#approach">Our Approach</a>
+      <a href="#industries">Industries</a>
+      <a href="#questions">Questions</a>
+      <a href="#experience">Experience</a>
+      <a href="#try">Try It</a>
+      <a href="#talk" class="cta">Talk to Us</a>
+    </nav>
+    <button class="menu" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
+  </div>
 </header>
+
 <section class="hero" id="home">
-    <div class="container hero-grid">
-        <div class="hero-copy">
-            <div class="eyebrow">CLIENT-SIDE INDEPENDENT CONSULTANT</div>
-            <h1>Make the right<br>decisions for your <span class="accent">assets.</span>
-            </h1>
-            <p>MAINTASSETS works alongside enterprises through asset management, maintenance transformation, technology decisions, implementation and adoption — keeping the business outcome at the centre.</p>
-            <div class="hero-actions">
-                <a class="btn primary" href="#about">Explore the journey ↓</a>
-                <a class="btn light" href="#talk">Talk to us</a>
-            </div>
-        </div>
-        <div class="logo-panel">
-            <img src="assets/maintassets-original-logo.png" alt="MAINTASSETS logo">
-        </div>
-        </div>
-        <div class="hero-bottom">ASSET MANAGEMENT · EAM / APM · TRANSFORMATION · ADOPTION</div>
-    </section>
-<section class="about" id="about">
-    <div class="container about-grid">
-        <div class="about-copy">
-            <div class="eyebrow">ABOUT MAINTASSETS</div>
-            <h2>From the first step<br>to the top.</h2>
-            <p>Enterprises rarely need another implementation voice. They need an independent perspective that connects strategy, assets, data, technology, people and adoption.</p>
-            <div class="mini-list">
-                <div>Understand the current state before changing it.</div>
-                <div>Choose technology and solutions around the business need.</div>
-                <div>Challenge assumptions, risks and implementation decisions.</div>
-                <div>Keep adoption and long-term value visible.</div>
-            </div>
-            <a class="btn" style="background:var(--b);color:#fff" href="#approach">Explore the journey →</a>
-        </div>
-        <div class="about-poster">
-            <img src="assets/poster-1.jpg" alt="Original MAINTASSETS journey poster">
-        </div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow">Client-Side Independent Consultant</div>
+      <h1>Make the right decisions for your <span class="accent">assets.</span></h1>
+      <p>MAINTASSETS works alongside enterprises through asset management, maintenance transformation, technology decisions, implementation and adoption — keeping the business outcome at the centre.</p>
+      <div class="hero-actions">
+        <a class="btn white" href="#about">Explore the journey ↓</a>
+        <a class="btn light" href="pulse-check/index.html" target="_blank" rel="noopener">Take the 2-min Pulse Check</a>
+      </div>
+      <div class="hero-pills"><span>ASSET MANAGEMENT</span><span>EAM / APM</span><span>TRANSFORMATION</span><span>ADOPTION</span></div>
     </div>
+    <div class="logo-panel"><img src="assets/maintassets-original-logo.png" alt="MAINTASSETS logo"></div>
+  </div>
 </section>
-<section class="stack" id="approach">
-    <div class="container">
-        <div class="stack-head">
-            <div class="eyebrow">THE ENTERPRISE JOURNEY</div>
-            <h2>One transformation.<br>Many decisions.</h2>
-            <p>Three moments where transformation decisions become real — and where the right questions can change the outcome.</p>
-        </div>
-        <div class="card-grid">
-            <article class="poster-card">
-                <div class="poster-zoom">
-                    <img src="assets/poster-2.jpg">
-                </div>
-                <div class="card-foot">
-                    <span>01 · Implementation &amp; Adoption</span>
-                    <h3>Why go-lives fade</h3>
-                </div>
-            </article>
-            <article class="poster-card">
-                <div class="poster-zoom">
-                    <img src="assets/poster-3.jpg">
-                </div>
-                <div class="card-foot">
-                    <span>02 · Migration</span>
-                    <h3>Move with intent</h3>
-                </div>
-            </article>
-            <article class="poster-card">
-                <div class="poster-zoom">
-                    <img src="assets/poster-4.jpg">
-                </div>
-                <div class="card-foot">
-                    <span>03 · Independent Oversight</span>
-                    <h3>Know who's watching</h3>
-                </div>
-            </article>
-        </div>
-    </div>
-</section>
-<section class="warning">
-    <div class="container warning-grid">
-        <div class="warning-copy">
-            <div class="eyebrow">WARNING SIGNS</div>
-            <h2>Spot the signs<br>before they become setbacks.</h2>
-            <p>Transformation rarely breaks all at once. The warning signs appear in the data, the process, the field and the decisions — if someone is looking closely enough.</p>
-            <a class="btn" style="background:#fff;color:var(--n)" href="#industries">View industries →</a>
-        </div>
-        <div class="warning-poster">
-            <img src="assets/poster-5.jpg">
-        </div>
-    </div>
-</section>
-<section class="industries" id="industries">
-    <div class="container">
-        <div class="ind-head">
-            <div>
-                <div class="eyebrow">INDUSTRIES</div>
-                <h2>Five industries.<br>One discipline.</h2>
-            </div>
-            <p>Different assets and operating environments. The same need for clarity around maintenance transformation, asset data, technology and adoption.</p>
-        </div>
-        <div class="industry-poster">
-            <img src="assets/poster-6.jpg">
-        </div>
-    </div>
-</section>
-<section class="focus" id="questions">
-    <div class="container">
-        <div class="focus-head">
-            <div>
-                <div class="eyebrow">THE QUESTIONS</div>
-                <h2>Ask the questions<br>that matter.</h2>
-            </div>
-            <div class="focus-creative">
-                <div class="focus-orbit"></div>
-                <span class="focus-chip">Strategy</span>
-                <span class="focus-chip">Assets</span>
-                <span class="focus-chip">Data</span>
-                <span class="focus-chip">People</span>
-                <div class="focus-centre">RIGHT<br>QUESTIONS</div>
-            </div>
-        </div>
-        <div class="poster7-shell">
-            <div class="focus-tag">MAINTASSETS · THE QUESTIONS</div>
-            <img class="poster7" src="assets/poster-7.jpg" alt="Original Poster 7">
-        </div>
-    </div>
-</section>
-<section class="experience" id="experience">
-    <div class="container">
-        <div class="exp-head">
-            <div class="eyebrow">EXPERIENCE</div>
-            <h2>Real engagements.<br>Real names.</h2>
-            <p>A cross-industry track record, built around the realities of asset-intensive organisations and the decisions that move transformation forward.</p>
-        </div>
-        <div class="exp-poster">
-            <img src="assets/poster-8.jpg">
-        </div>
-    </div>
-</section>
-<section class="talk" id="talk">
-    <div class="container talk-grid">
-        <div class="talk-copy">
-            <div class="eyebrow">TALK TO US</div>
-            <h2>Recognise your organisation<br>in any of this?</h2>
-            <p>Take the conversation beyond the exhibition. Bring your asset, maintenance and transformation questions to an independent client-side perspective focused on business outcomes, adoption and lasting value.</p>
-            <div class="contact-strip">
-                <a class="btn" href="mailto:manojkumar@maintassets.com">Email MAINTASSETS →</a>
-                <a class="btn alt" href="#questions">Back to the questions ↑</a>
-            </div>
-        </div>
-        <div class="talk-poster">
-            <img src="assets/poster-9.jpg">
-        </div>
-    </div>
-</section>
-    <div class="operation-addresses">
-    <div class="operation-title">Operation Addresses</div>
 
-    <div class="operation-grid">
-
-        <div>
-            <strong>UAE</strong><br>
-            Sharjah Media City<br>
-            Al Messaned, Al Mtsannid Suburb<br>
-            Sharjah, United Arab Emirates
-        </div>
-
-        <div>
-            <strong>India</strong><br>
-            Rus Coworks<br>
-            18th Avenue, Pudur, Ambattur<br>
-            Chennai, India
-        </div>
-
+<section class="band white" id="about">
+  <div class="container split">
+    <div class="split-copy">
+      <div class="eyebrow">About Maintassets</div>
+      <h2>From the first step to the top.</h2>
+      <p class="lead">Enterprises rarely need another implementation voice. They need an independent perspective that connects strategy, assets, data, technology, people and adoption.</p>
+      <div class="mini-list">
+        <div>Understand the current state before changing it.</div>
+        <div>Choose technology and solutions around the business need.</div>
+        <div>Challenge assumptions, risks and implementation decisions.</div>
+        <div>Keep adoption and long-term value visible.</div>
+      </div>
+      <a class="btn blue" href="#approach">Explore the journey →</a>
     </div>
-</div>
+    <div><button class="poster" data-title="From the first step to the top" data-tag="The Journey"><img src="assets/poster-1.jpg" alt="MAINTASSETS journey poster" loading="lazy"></button></div>
+  </div>
+</section>
+
+<section class="band grid-bg" id="approach">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">The Enterprise Journey</div>
+      <h2>One transformation. Many decisions.</h2>
+      <p class="lead">Three moments where transformation decisions become real — and where the right questions can change the outcome.</p>
+    </div>
+    <div class="card-grid">
+      <article class="poster-card">
+        <button class="poster" data-title="Why go-lives fade" data-tag="01 · Implementation &amp; Adoption"><img src="assets/poster-2.jpg" alt="Poster: Why go-lives fade" loading="lazy"></button>
+        <div class="card-foot"><div><span>01 · Implementation &amp; Adoption</span><h3>Why go-lives fade</h3></div><button class="read-btn" data-open="1">Read ⤢</button></div>
+      </article>
+      <article class="poster-card">
+        <button class="poster" data-title="Move with intent" data-tag="02 · Migration"><img src="assets/poster-3.jpg" alt="Poster: Move with intent" loading="lazy"></button>
+        <div class="card-foot"><div><span>02 · Migration</span><h3>Move with intent</h3></div><button class="read-btn" data-open="2">Read ⤢</button></div>
+      </article>
+      <article class="poster-card">
+        <button class="poster" data-title="Know who's watching" data-tag="03 · Independent Oversight"><img src="assets/poster-4.jpg" alt="Poster: Know who's watching" loading="lazy"></button>
+        <div class="card-foot"><div><span>03 · Independent Oversight</span><h3>Know who's watching</h3></div><button class="read-btn" data-open="3">Read ⤢</button></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band navy">
+  <div class="container split">
+    <div class="split-copy">
+      <div class="eyebrow">Warning Signs</div>
+      <h2>Spot the signs before they become setbacks.</h2>
+      <p class="lead">Transformation rarely breaks all at once. The warning signs appear in the data, the process, the field and the decisions — if someone is looking closely enough.</p>
+      <a class="btn white" href="#industries">View industries →</a>
+    </div>
+    <div><button class="poster" data-title="Spot the signs before they become setbacks" data-tag="Warning Signs"><img src="assets/poster-5.jpg" alt="Poster: Warning signs" loading="lazy"></button></div>
+  </div>
+</section>
+
+<section class="band white" id="industries">
+  <div class="container split flip">
+    <div class="split-copy">
+      <div class="eyebrow">Industries</div>
+      <h2>Five industries. One discipline.</h2>
+      <p class="lead">Different assets and operating environments. The same need for clarity around maintenance transformation, asset data, technology and adoption.</p>
+    </div>
+    <div><button class="poster" data-title="Five industries. One discipline." data-tag="Industries"><img src="assets/poster-6.jpg" alt="Poster: Five industries, one discipline" loading="lazy"></button></div>
+  </div>
+</section>
+
+<section class="band grid-bg" id="questions">
+  <div class="container split">
+    <div class="split-copy">
+      <div class="eyebrow">The Questions</div>
+      <h2>Ask the questions that matter.</h2>
+      <p class="lead">The questions maintenance, plant and transformation heads are already asking — and the ones that decide whether a go-live becomes real adoption.</p>
+      <div class="chips"><span class="core">Right questions</span><span>Strategy</span><span>Assets</span><span>Data</span><span>People</span></div>
+    </div>
+    <div><button class="poster" data-title="Ask the questions that matter" data-tag="The Questions"><img src="assets/poster-7.jpg" alt="Poster: The questions" loading="lazy"></button></div>
+  </div>
+</section>
+
+<section class="band white" id="experience">
+  <div class="container split flip">
+    <div class="split-copy">
+      <div class="eyebrow">Experience</div>
+      <h2>Real engagements. Real names.</h2>
+      <p class="lead">A cross-industry track record, built around the realities of asset-intensive organisations and the decisions that move transformation forward.</p>
+    </div>
+    <div><button class="poster" data-title="Real engagements. Real names." data-tag="Experience"><img src="assets/poster-8.jpg" alt="Poster: Real engagements, real names" loading="lazy"></button></div>
+  </div>
+</section>
+
+<section class="band navy" id="try">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Try It Yourself</div>
+      <h2 style="color:#fff">See where you stand — in two minutes.</h2>
+      <p class="lead" style="color:#ffffffb8">Two quick, interactive ways to test your organisation's thinking before we talk.</p>
+    </div>
+    <div class="try-grid">
+      <a class="try-card" href="game/index.html" target="_blank" rel="noopener">
+        <div class="try-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="18" width="36" height="22" rx="3" fill="#24426a" stroke="#efb45f" stroke-width="2.5"/><path d="M40 24h10l9 9v7H40z" fill="#1b3350" stroke="#efb45f" stroke-width="2.5"/><circle cx="16" cy="44" r="5" fill="#091f3a" stroke="#fff" stroke-width="2.5"/><circle cx="50" cy="44" r="5" fill="#091f3a" stroke="#fff" stroke-width="2.5"/><path d="M2 54h60" stroke="#efb45f" stroke-width="2" stroke-dasharray="5 4"/></svg></div>
+        <div class="try-meta">Interactive game · 2 min</div>
+        <h3>Play the Adoption Journey</h3>
+        <p>Move Leadership, Assets, Data and Technology from paper to digital — and discover why every decision needs leadership on board.</p>
+        <span class="btn gold">Play now →</span>
+      </a>
+      <a class="try-card" href="pulse-check/index.html" target="_blank" rel="noopener">
+        <div class="try-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="34" r="24" fill="none" stroke="#ffffff55" stroke-width="2.5"/><circle cx="32" cy="34" r="17" fill="none" stroke="#ffffff30" stroke-width="1.5"/><path d="M32 34l13-11" stroke="#efb45f" stroke-width="3.5" stroke-linecap="round"/><circle cx="32" cy="34" r="4" fill="#efb45f"/><path d="M10 34h5M49 34h5M32 12v5" stroke="#ffffff80" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+        <div class="try-meta">5 questions · 2 min</div>
+        <h3>Take the Pulse Check</h3>
+        <p>Five honest questions about how maintenance really runs on your floor. Get your Digital Adoption Score across Data, Technology, Strategy, Adoption and Leadership.</p>
+        <span class="btn gold">Take the check →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="band grid-bg" id="talk">
+  <div class="container split">
+    <div class="split-copy">
+      <div class="eyebrow">Talk to Us</div>
+      <h2>Recognise your organisation in any of this?</h2>
+      <p class="lead">Take the conversation beyond the exhibition. Bring your asset, maintenance and transformation questions to an independent client-side perspective focused on business outcomes, adoption and lasting value.</p>
+      <div class="hero-actions">
+        <a class="btn dark" href="mailto:manojkumar@maintassets.com">Email MAINTASSETS →</a>
+        <a class="btn" style="background:#fff" href="#questions">Back to the questions ↑</a>
+      </div>
+    </div>
+    <div><button class="poster" data-title="Talk to us" data-tag="Talk to Us"><img src="assets/poster-9.jpg" alt="Poster: Talk to us" loading="lazy"></button></div>
+  </div>
+</section>
+
 <footer class="footer">
-    <div class="container footer-simple">
-        <div>Copyright © 2026 MAINTASSETS. All rights reserved.</div>
-        <a href="#">Terms &amp; Privacy</a>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <strong>MAINTASSETS</strong>
+        <p>Client-side independent consultant for asset management, maintenance transformation and adoption.</p>
+        <p><a href="mailto:manojkumar@maintassets.com">manojkumar@maintassets.com</a></p>
+      </div>
+      <div>
+        <h4>UAE</h4>
+        <p>Sharjah Media City<br>Al Messaned, Al Mtsannid Suburb<br>Sharjah, United Arab Emirates</p>
+      </div>
+      <div>
+        <h4>India</h4>
+        <p>Rus Coworks<br>18th Avenue, Pudur, Ambattur<br>Chennai, India</p>
+      </div>
     </div>
+    <div class="footer-bottom">
+      <div>Copyright © 2026 MAINTASSETS. All rights reserved.</div>
+      <a href="#">Terms &amp; Privacy</a>
+    </div>
+  </div>
 </footer>
-<script>addEventListener('scroll',()=>{let m=document.documentElement.scrollHeight-innerHeight;document.getElementById('progress').style.width=(scrollY/m*100)+'%'})</script>
+
+<!-- Poster lightbox -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Poster viewer">
+  <div class="lb-top">
+    <div class="lb-title"><small id="lbTag"></small><span id="lbTitle"></span></div>
+    <div class="lb-tools">
+      <button class="lb-btn" id="lbOut" aria-label="Zoom out">−</button>
+      <span class="lb-zoom" id="lbZoom">100%</span>
+      <button class="lb-btn" id="lbIn" aria-label="Zoom in">+</button>
+      <button class="lb-btn hide-sm" id="lbFit">Fit</button>
+      <button class="lb-btn hide-sm" id="lbWidth">Fit width</button>
+      <button class="lb-btn" id="lbClose" aria-label="Close">✕</button>
+    </div>
+  </div>
+  <div class="lb-stage" id="lbStage">
+    <img id="lbImg" alt="">
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous poster">‹</button>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Next poster">›</button>
+  </div>
+  <div class="lb-help"><span id="lbCount"></span> · Scroll or pinch to zoom · Drag to move · Double-click to zoom in · Esc to close</div>
+</div>
+
+<script>
+/* scroll progress */
+addEventListener('scroll',()=>{const m=document.documentElement.scrollHeight-innerHeight;document.getElementById('progress').style.width=(m>0?scrollY/m*100:0)+'%'},{passive:true});
+
+/* mobile menu */
+const menuBtn=document.getElementById('menuBtn'),navlinks=document.getElementById('navlinks');
+menuBtn.onclick=()=>{const o=navlinks.classList.toggle('open');menuBtn.setAttribute('aria-expanded',o);menuBtn.textContent=o?'✕':'☰'};
+navlinks.querySelectorAll('a').forEach(a=>a.onclick=()=>{navlinks.classList.remove('open');menuBtn.textContent='☰'});
+
+/* poster lightbox */
+(function(){
+  const posters=[...document.querySelectorAll('.poster')];
+  posters.forEach(p=>{const h=document.createElement('span');h.className='zoom-hint';h.textContent='⤢ Click to read';p.appendChild(h)});
+  const lb=document.getElementById('lb'),stage=document.getElementById('lbStage'),img=document.getElementById('lbImg');
+  const $=id=>document.getElementById(id);
+  let idx=0,scale=1,x=0,y=0,fitScale=1,lastFocus=null;
+  const MAX=6;
+  function apply(){img.style.transform=`translate(${x}px,${y}px) scale(${scale})`;$('lbZoom').textContent=Math.round(scale/fitScale*100)+'%'}
+  function clampPos(){
+    const sw=stage.clientWidth,sh=stage.clientHeight,iw=img.naturalWidth*scale,ih=img.naturalHeight*scale;
+    x=iw<=sw?(sw-iw)/2:Math.min(0,Math.max(sw-iw,x));
+    y=ih<=sh?(sh-ih)/2:Math.min(0,Math.max(sh-ih,y));
+  }
+  function fit(mode){
+    const sw=stage.clientWidth-32,sh=stage.clientHeight-32,iw=img.naturalWidth,ih=img.naturalHeight;
+    if(!iw)return;
+    fitScale=Math.min(sw/iw,sh/ih);
+    scale=mode==='width'?(stage.clientWidth-32)/iw:fitScale;
+    x=0;y=16;clampPos();if(mode==='width')y=16;apply();
+  }
+  function zoomAt(f,cx,cy){
+    const ns=Math.min(fitScale*MAX,Math.max(fitScale*.5,scale*f));
+    if(cx===undefined){cx=stage.clientWidth/2;cy=stage.clientHeight/2}
+    x=cx-(cx-x)*(ns/scale);y=cy-(cy-y)*(ns/scale);scale=ns;clampPos();apply();
+  }
+  function show(i){
+    idx=(i+posters.length)%posters.length;const p=posters[idx],src=p.querySelector('img');
+    $('lbTitle').textContent=p.dataset.title||src.alt;$('lbTag').textContent=p.dataset.tag||'';
+    $('lbCount').textContent=`Poster ${idx+1} of ${posters.length}`;
+    img.alt=src.alt;img.style.opacity=0;
+    img.onload=()=>{fit();img.style.opacity=1};img.src=src.currentSrc||src.src;
+    if(img.complete&&img.naturalWidth){fit();img.style.opacity=1}
+  }
+  function open(i){lastFocus=document.activeElement;lb.classList.add('open');document.body.style.overflow='hidden';show(i);$('lbClose').focus()}
+  function close(){lb.classList.remove('open');document.body.style.overflow='';if(lastFocus)lastFocus.focus()}
+  posters.forEach((p,i)=>p.addEventListener('click',()=>open(i)));
+  document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const card=b.closest('.poster-card');open(posters.indexOf(card.querySelector('.poster')))}));
+  $('lbClose').onclick=close;$('lbPrev').onclick=()=>show(idx-1);$('lbNext').onclick=()=>show(idx+1);
+  $('lbIn').onclick=()=>zoomAt(1.4);$('lbOut').onclick=()=>zoomAt(1/1.4);$('lbFit').onclick=()=>fit();$('lbWidth').onclick=()=>fit('width');
+  addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')close();else if(e.key==='ArrowRight')show(idx+1);else if(e.key==='ArrowLeft')show(idx-1);
+    else if(e.key==='+'||e.key==='=')zoomAt(1.25);else if(e.key==='-')zoomAt(.8);else if(e.key==='0')fit();});
+  addEventListener('resize',()=>{if(lb.classList.contains('open'))fit()});
+  stage.addEventListener('wheel',e=>{e.preventDefault();const r=stage.getBoundingClientRect();
+    zoomAt(e.deltaY<0?1.15:1/1.15,e.clientX-r.left,e.clientY-r.top)},{passive:false});
+  stage.addEventListener('dblclick',e=>{if(e.target.closest('.lb-nav'))return;const r=stage.getBoundingClientRect();
+    scale>fitScale*1.5?fit():zoomAt(2.5,e.clientX-r.left,e.clientY-r.top)});
+  /* drag + pinch with pointer events */
+  const pts=new Map();let startDist=0,startScale=1;
+  stage.addEventListener('pointerdown',e=>{if(e.target.closest('.lb-nav'))return;stage.setPointerCapture(e.pointerId);pts.set(e.pointerId,{x:e.clientX,y:e.clientY});stage.classList.add('drag');
+    if(pts.size===2){const [a,b]=[...pts.values()];startDist=Math.hypot(a.x-b.x,a.y-b.y);startScale=scale}});
+  stage.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;const prev=pts.get(e.pointerId);pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pts.size===1){x+=e.clientX-prev.x;y+=e.clientY-prev.y;clampPos();apply()}
+    else if(pts.size===2){const [a,b]=[...pts.values()],d=Math.hypot(a.x-b.x,a.y-b.y),r=stage.getBoundingClientRect();
+      zoomAt((startScale*d/startDist)/scale,(a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top)}});
+  const up=e=>{pts.delete(e.pointerId);if(!pts.size)stage.classList.remove('drag')};
+  stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);
+  /* swipe between posters when not zoomed */
+  let sx=null;stage.addEventListener('touchstart',e=>{sx=e.touches.length===1?e.touches[0].clientX:null},{passive:true});
+  stage.addEventListener('touchend',e=>{if(sx===null||scale>fitScale*1.05)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>70)show(idx+(dx<0?1:-1));sx=null});
+})();
+</script>
 </body>
 </html>
