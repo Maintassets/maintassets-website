@@ -216,11 +216,14 @@
   .pillar-breakdown { display: flex; flex-direction: column; gap: 10px; }
   .pillar-row { display: flex; align-items: center; gap: 10px; }
   .pillar-row .pname { width: 118px; flex: none; font-size: 12.5px; color: var(--ink); font-weight: 600; }
-  .pillar-row .bar-track { flex: 1; height: 7px; border-radius: 4px; background: var(--line); position: relative; overflow: hidden; }
+  .pillar-row .bar-track { flex: 1; height: 7px; border-radius: 4px; background: var(--line); position: relative; overflow: visible; }
   .pillar-row .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--amber-deep); border-radius: 4px; }
+  /* A pillar that scored 0 gets a visible ring at the start of its bar, so 0 reads as a real score, not an empty/missing one */
+  .pillar-row .bar-zero { position: absolute; left: -1px; top: 50%; width: 13px; height: 13px; border-radius: 50%; transform: translateY(-50%); background: var(--surface); border: 2.5px solid var(--amber-deep); box-sizing: border-box; }
+  .pillar-row .pval.zero { color: var(--amber-deep); font-weight: 700; }
   .pillar-row .bar-ref { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--navy-mid); }
   :root[data-theme="dark"] .pillar-row .bar-ref { background: var(--navy-soft); }
-  .pillar-row .pval { width: 30px; text-align: right; font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); }
+  .pillar-row .pval { width: 48px; flex: none; white-space: nowrap; text-align: right; font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); }
 
   .close-card {
     background: var(--surface-sunk); border: 1px solid var(--line); border-radius: 12px; padding: 16px 16px;
@@ -265,15 +268,17 @@
   .rp-legend span:before{content:"";display:inline-block;width:2.6mm;height:2.6mm;border-radius:50%;margin-right:1.4mm;vertical-align:-.3mm;background:#b97327}
   .rp-legend span.m:before{background:none;border:.35mm dashed #3a4f6b}
   .rp-rows{display:flex;flex-direction:column;gap:2.6mm}
-  .rp-row{display:grid;grid-template-columns:32mm 1fr 10mm;gap:3mm;align-items:center}
+  .rp-row{display:grid;grid-template-columns:32mm 1fr 13mm;gap:3mm;align-items:center}
   .rp-row b{font-size:9pt;color:#0f1f33}
   .rp-bar{height:2.4mm;border-radius:1.2mm;background:#ece6d8;position:relative}
   .rp-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:1.2mm;background:#b97327}
+  .rp-bar s{position:absolute;left:-.5mm;top:50%;width:3.6mm;height:3.6mm;border-radius:50%;transform:translateY(-50%);background:#fff;border:.5mm solid #b97327;box-sizing:border-box;text-decoration:none}
+  .rp-row em.zero{color:#b97327;font-weight:700}
   .rp-bar u{position:absolute;top:-.8mm;bottom:-.8mm;width:.5mm;background:#3a4f6b}
   .rp-row em{font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:8.5pt;text-align:right;color:#5b6b80}
   .rp-h{font-family:'IBM Plex Serif',Georgia,serif;font-weight:700;font-size:11.5pt;color:#0f1f33;margin:0 0 2.5mm;padding-bottom:1.5mm;border-bottom:.3mm solid #e2dccb}
   .rp-read{display:grid;gap:0;margin-bottom:4mm}
-  .rp-read div{display:grid;grid-template-columns:34mm 12mm 1fr;gap:3mm;padding:1.7mm 2.5mm;align-items:baseline}
+  .rp-read div{display:grid;grid-template-columns:34mm 14mm 1fr;gap:3mm;padding:1.7mm 2.5mm;align-items:baseline}
   .rp-read div:nth-child(odd){background:#f8f5ee}
   .rp-read b{color:#0f1f33;font-size:9pt}
   .rp-read em{font-style:normal;font-family:'IBM Plex Mono',monospace;color:#b97327;font-weight:600}
@@ -529,6 +534,25 @@
     });
   }
 
+  // Present each pillar's answers in a random order (fixed for the session) so the
+  // list gives no clue that the first is the weakest and the last the strongest.
+  // data-i still carries the ORIGINAL index, so scoring is unaffected.
+  function shuffledOrder(n) {
+    const rnd = () => { try { return crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296; } catch (e) { return Math.random(); } };
+    let a, tries = 0;
+    do {
+      a = Array.from({ length: n }, (_, i) => i);
+      for (let i = n - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+      tries++;
+      // reject orders that still read as a ladder (rising or falling)
+      const asc = a.every((v, i) => i === 0 || v > a[i - 1]);
+      const desc = a.every((v, i) => i === 0 || v < a[i - 1]);
+      if (!asc && !desc) break;
+    } while (tries < 20);
+    return a;
+  }
+  const ORDER = PILLARS.map(p => shuffledOrder(p.options.length));
+
   function renderQuestion(pIndex) {
     const p = PILLARS[pIndex];
     const el = document.querySelector('[data-screen="q' + pIndex + '"]');
@@ -539,10 +563,10 @@
         <h2>${p.question}</h2>
       </div>
       <div class="options">
-        ${p.options.map((o, i) => `
+        ${ORDER[pIndex].map(i => `
           <div class="option${sel.has(i) ? ' selected' : ''}" data-i="${i}">
             <span class="box"></span>
-            <span class="label">${o.text}</span>
+            <span class="label">${p.options[i].text}</span>
           </div>
         `).join('')}
       </div>
@@ -591,11 +615,31 @@
   [fName, fCompany, fRole, fEmail].forEach(f => f.addEventListener('input', checkLead));
   fRole.addEventListener('change', checkLead);
 
+  // How several ticked answers combine into ONE pillar score (0-4, exact fraction).
+  //   'average' (default) - exact mean of the ticked answers (not rounded). Ticking one weak
+  //                         and one strong practice lands in the middle, which is
+  //                         what "pick everything that's true" should mean.
+  //   'min'               - weakest ticked answer. (Old behaviour: a single weak
+  //                         tick drags the whole pillar to its floor, so honest
+  //                         multi-select answers kept scoring 0.)
+  //   'max'               - strongest ticked answer.
+  const SCORE_MODE = 'average';
+  function combine(weights) {
+    if (!weights.length) return 0;
+    if (SCORE_MODE === 'min') return Math.min(...weights);
+    if (SCORE_MODE === 'max') return Math.max(...weights);
+    // Exact mean, kept as a fraction (no rounding up or down) - 2 d.p. only to drop float noise.
+    const avg = weights.reduce((a, b) => a + b, 0) / weights.length;
+    return Math.min(4, Math.max(0, Math.round(avg * 100) / 100));
+  }
+  // Show the real value: whole numbers stay whole (3), fractions keep up to 2 decimals (2.5, 3.33).
+  function fmt(v) { return String(Math.round(v * 100) / 100); }
+
   function computeScores() {
     const scores = {};
     PILLARS.forEach((p, i) => {
       const chosen = Array.from(selections[i]).map(idx => p.options[idx].w);
-      scores[p.key] = chosen.length ? Math.min(...chosen) : 0;
+      scores[p.key] = combine(chosen);
     });
     return scores;
   }
@@ -666,7 +710,7 @@
       const lx = cx + lr * Math.cos(a);
       const ly = cy + lr * Math.sin(a);
       const anchor = Math.abs(Math.cos(a)) < 0.3 ? 'middle' : (Math.cos(a) > 0 ? 'start' : 'end');
-      return `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle" class="axis-label">${PILLARS[i].name}</text>`;
+      return `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle" class="axis-label"><tspan x="${lx.toFixed(1)}">${PILLARS[i].name}</tspan><tspan x="${lx.toFixed(1)}" dy="13" class="axis-score${scores[k] === 0 ? ' zero' : ''}">${fmt(scores[k])} / 4</tspan></text>`;
     }).join('');
 
     return `
@@ -678,6 +722,10 @@
         .mature-shape { fill: none; stroke: var(--navy-mid); stroke-width: 1.6; stroke-dasharray: 4 4; }
         .you-shape { fill: var(--amber); fill-opacity: 0.22; stroke: var(--amber-deep); stroke-width: 2.2; stroke-linejoin: round; }
         .center-dot { fill: var(--grid); }
+        .axis-score { font-family: ${'\''}IBM Plex Mono${'\''}, monospace; font-size: 10.5px; font-weight: 600; fill: var(--amber-deep); }
+        .you-dot { fill: var(--amber-deep); stroke: var(--surface); stroke-width: 1.5; }
+        .you-dot.zero { fill: var(--surface); stroke: var(--amber-deep); stroke-width: 2.4; }
+        .tick-label { font-family: ${'\''}IBM Plex Mono${'\''}, monospace; font-size: 8.5px; fill: var(--ink-soft); }
       </style>
       <polygon class="grid-ring" points="${ring(1)}"></polygon>
       <polygon class="grid-ring" points="${ring(2)}"></polygon>
@@ -687,6 +735,8 @@
       <polygon class="mature-shape" points="${maturePts}"></polygon>
       <polygon class="you-shape" points="${youPts}"></polygon>
       <circle class="center-dot" cx="${cx}" cy="${cy}" r="2"></circle>
+      ${[0, 1, 2, 3, 4].map(v => `<text class="tick-label" x="${cx + 5}" y="${(cy - (v / 4) * R + (v === 0 ? 11 : -2)).toFixed(1)}">${v}</text>`).join('')}
+      ${axes.map((k, i) => { const [x, y] = pt(i, scores[k]); return `<circle class="you-dot${scores[k] === 0 ? ' zero' : ''}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${scores[k] === 0 ? 5.5 : 3.6}"></circle>`; }).join('')}
       ${labels}
     </svg>`;
   }
@@ -697,7 +747,7 @@
     const band = bandFor(total);
 
     document.getElementById('res-name').textContent = fName.value.trim() ? fName.value.trim() + "'s result" : 'Your result';
-    document.getElementById('res-total').textContent = total;
+    document.getElementById('res-total').textContent = fmt(total);
     document.getElementById('res-band').textContent = band.name;
 
     const phase = document.getElementById('res-phase');
@@ -724,9 +774,10 @@
           <span class="pname">${p.name}</span>
           <span class="bar-track">
             <span class="bar-fill" style="width:${(v / 4) * 100}%"></span>
+            ${v === 0 ? '<span class="bar-zero" title="Scored 0"></span>' : ''}
             <span class="bar-ref" style="left:${(ref / 4) * 100}%"></span>
           </span>
-          <span class="pval">${v}/4</span>
+          <span class="pval${v === 0 ? ' zero' : ''}">${fmt(v)}/4</span>
         </div>`;
     }).join('');
 
@@ -780,21 +831,23 @@
     PILLARS.forEach((p,i)=>{const [x,y]=pt(i,4);s+=`<line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#e2dccb"/>`});
     s+=`<polygon points="${poly(p=>MATURED[p.key])}" fill="none" stroke="#3a4f6b" stroke-width="1.6" stroke-dasharray="4 4"/>`;
     s+=`<polygon points="${poly(p=>scores[p.key])}" fill="#d99544" fill-opacity=".25" stroke="#b97327" stroke-width="2.2" stroke-linejoin="round"/>`;
-    PILLARS.forEach((p,i)=>{const a=ang(i),lx=cx+(R+24)*Math.cos(a),ly=cy+(R+24)*Math.sin(a);
+    PILLARS.forEach((p,i)=>{const [x,y]=pt(i,scores[p.key]);const z=scores[p.key]===0;s+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${z?5.5:3.6}" fill="${z?'#fff':'#b97327'}" stroke="${z?'#b97327':'#fff'}" stroke-width="${z?2.4:1.5}"/>`});
+    for(let v=0;v<=4;v++){s+=`<text x="${cx+5}" y="${(cy-v/4*R+(v===0?11:-2)).toFixed(1)}" font-family="IBM Plex Mono,monospace" font-size="8.5" fill="#5b6b80">${v}</text>`}
+    PILLARS.forEach((p,i)=>{const a=ang(i),lx=cx+(R+24)*Math.cos(a),ly=cy+(R+24)*Math.sin(a)-(i===0?12:0);
       const anc=Math.abs(Math.cos(a))<.3?'middle':(Math.cos(a)>0?'start':'end');
-      s+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anc}" dominant-baseline="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#3a4f6b">${p.name}</text>`});
+      s+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anc}" dominant-baseline="middle" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#3a4f6b"><tspan x="${lx.toFixed(1)}">${p.name}</tspan><tspan x="${lx.toFixed(1)}" dy="13" font-weight="600" fill="#b97327">${fmt(scores[p.key])} / 4</tspan></text>`});
     return s+'</svg>';
   }
   function fillReport(scores,total,band){
     const set=(id,v)=>document.getElementById(id).textContent=v;
     set('rp-name',fName.value.trim());set('rp-role',fRole.value);set('rp-company',fCompany.value.trim());
     set('rp-date',new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}));
-    set('rp-total',total);set('rp-band',band.name);set('rp-summary',BAND_SUMMARY[band.name]||'');
+    set('rp-total',fmt(total));set('rp-band',band.name);set('rp-summary',BAND_SUMMARY[band.name]||'');
     const bi=BANDS.indexOf(band);
     document.getElementById('rp-track').innerHTML=BANDS.map((b,i)=>`<div class="${i<=bi?'on':''}"></div>`).join('');
     document.getElementById('rp-radar').innerHTML=reportRadar(scores);
-    document.getElementById('rp-rows').innerHTML=PILLARS.map(p=>`<div class="rp-row"><b>${p.name}</b><span class="rp-bar"><i style="width:${scores[p.key]/4*100}%"></i><u style="left:${MATURED[p.key]/4*100}%"></u></span><em>${scores[p.key]}/4</em></div>`).join('');
-    document.getElementById('rp-read').innerHTML=PILLARS.map(p=>`<div><b>${p.name}</b><em>${scores[p.key]}/4</em><span>${esc(READ[p.key][scores[p.key]])}</span></div>`).join('');
+    document.getElementById('rp-rows').innerHTML=PILLARS.map(p=>`<div class="rp-row"><b>${p.name}</b><span class="rp-bar"><i style="width:${scores[p.key]/4*100}%"></i>${scores[p.key]===0?'<s></s>':''}<u style="left:${MATURED[p.key]/4*100}%"></u></span><em${scores[p.key]===0?' class="zero"':''}>${fmt(scores[p.key])}/4</em></div>`).join('');
+    document.getElementById('rp-read').innerHTML=PILLARS.map(p=>`<div><b>${p.name}</b><em>${fmt(scores[p.key])}/4</em><span>${esc(READ[p.key][Math.floor(scores[p.key])])}</span></div>`).join('');
   }
   document.getElementById('download-btn').addEventListener('click',()=>{
     const old=document.title,co=(fCompany.value.trim()||'Report').replace(/[^\w\- ]+/g,'').replace(/\s+/g,'_');
